@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    
+    <base-config cleartextTrafficPermitted="false">
+        <!-- Use system default certificate authorities -->
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+    
+    <domain-config cleartextTrafficPermitted="false">
+        <!-- Your specific Supabase project -->
+        <domain includeSubdomains="true">hiommpywjxtmaekkmhkn.supabase.co</domain>
+        
+        <!-- All Supabase projects (for future migration or multi-project) -->
+        <domain includeSubdomains="true">supabase.co</domain>
+        
+        <!-- Supabase CDN and Storage -->
+        <domain includeSubdomains="true">supabase.in</domain>
+        
+        <!-- Google Gemini AI API -->
+        <domain includeSubdomains="true">generativelanguage.googleapis.com</domain>
+        
+        <!-- Trust system certificates for HTTPS -->
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+        
+        <!-- Pin certificates for additional security (optional but recommended) -->
+        <pin-set expiration="2027-12-31">
+            <!-- Let's Encrypt (used by Supabase) -->
+            <pin digest="SHA-256">C5+lpZ7tcVwmwQIMcRtPbsQtWLABXhQzejna0wHFr8M=</pin>
+            <!-- DigiCert (backup) -->
+            <pin digest="SHA-256">r/mIkG3eEpVdm+u/ko/cwxzOMo1bk4TyHIlByibiA5E=</pin>
+        </pin-set>
+    </domain-config>
+</network-security-config>
