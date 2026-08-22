@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:provider/provider.dart';
-import 'dart:io';
 import '../../models/product_model.dart';
 import '../../models/user_model.dart';
 import '../../providers/auth_provider.dart';
