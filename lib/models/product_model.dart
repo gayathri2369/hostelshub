@@ -19,6 +19,8 @@ class ProductModel {
   final ProductStatus status;
   final DateTime createdAt;
   bool isWishlisted;
+  final double averageRating;
+  final int totalReviews;
 
   ProductModel({
     required this.id,
@@ -34,6 +36,8 @@ class ProductModel {
     this.status = ProductStatus.available,
     required this.createdAt,
     this.isWishlisted = false,
+    this.averageRating = 0.0,
+    this.totalReviews = 0,
   });
 
   String get categoryLabel {
@@ -59,12 +63,23 @@ class ProductModel {
     return labels[status] ?? 'Available';
   }
 
+  // Get star rating display
+  String get starRating {
+    int fullStars = averageRating.floor();
+    return '⭐' * fullStars + '☆' * (5 - fullStars);
+  }
+
+  // Get rating percentage (0.0 to 1.0) for progress bars
+  double get ratingPercentage {
+    return averageRating / 5.0;
+  }
+
   ProductModel copyWith({
     String? id, String? title, String? description,
     ProductCategory? category, double? price, List<String>? imageUrls,
     String? sellerId, String? sellerName, String? sellerHostel,
     String? sellerPhone, ProductStatus? status, DateTime? createdAt,
-    bool? isWishlisted,
+    bool? isWishlisted, double? averageRating, int? totalReviews,
   }) {
     return ProductModel(
       id:           id           ?? this.id,
@@ -80,6 +95,8 @@ class ProductModel {
       status:       status       ?? this.status,
       createdAt:    createdAt    ?? this.createdAt,
       isWishlisted: isWishlisted ?? this.isWishlisted,
+      averageRating: averageRating ?? this.averageRating,
+      totalReviews:  totalReviews  ?? this.totalReviews,
     );
   }
 
@@ -122,6 +139,8 @@ class ProductModel {
       createdAt: DateTime.parse(
         (row['created_at'] as String?) ?? DateTime.now().toIso8601String(),
       ),
+      averageRating: ((row['average_rating'] ?? 0.0) as num).toDouble(),
+      totalReviews:  (row['total_reviews'] ?? 0) as int,
     );
   }
 

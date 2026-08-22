@@ -10,6 +10,7 @@ import '../../providers/chat_provider.dart';
 import '../../utils/app_colors.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/back_navigation_guard.dart';
+import '../../widgets/enhanced_product_card.dart';
 import '../../main.dart';
 
 class BuyerDashboard extends StatefulWidget {
@@ -397,7 +398,18 @@ class _BuyerDashboardState extends State<BuyerDashboard> {
                                   childAspectRatio: 0.75,
                                 ),
                                 itemCount: filtered.length,
-                                itemBuilder: (_, i) => _ProductCard(product: filtered[i]),
+                                itemBuilder: (_, i) => EnhancedProductCard(
+                                  product: filtered[i],
+                                  onTap: () => Navigator.pushNamed(
+                                    context,
+                                    AppRoutes.productDetail,
+                                    arguments: filtered[i].id,
+                                  ),
+                                  onWishlistToggle: () {
+                                    final uid = context.read<AuthProvider>().currentUser!.id;
+                                    products.toggleWishlist(filtered[i].id, uid);
+                                  },
+                                ),
                               ),
                       ],
                     ),
@@ -666,7 +678,18 @@ class _BuyerDashboardState extends State<BuyerDashboard> {
                   padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
                   sliver: SliverGrid(
                     delegate: SliverChildBuilderDelegate(
-                      (_, i) => _ProductCard(product: filtered[i]),
+                      (_, i) => EnhancedProductCard(
+                        product: filtered[i],
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          AppRoutes.productDetail,
+                          arguments: filtered[i].id,
+                        ),
+                        onWishlistToggle: () {
+                          final uid = context.read<AuthProvider>().currentUser!.id;
+                          products.toggleWishlist(filtered[i].id, uid);
+                        },
+                      ),
                       childCount: filtered.length,
                     ),
                     gridDelegate:
@@ -857,221 +880,5 @@ class _CategoryRow extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-// ─── Product Card ─────────────────────────────────────────────────────────────
-class _ProductCard extends StatelessWidget {
-  final ProductModel product;
-  const _ProductCard({required this.product});
-
-  @override
-  Widget build(BuildContext context) {
-    final products    = context.watch<ProductProvider>();
-    final isWishlisted = products.isWishlisted(product.id);
-
-    return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, AppRoutes.productDetail,
-          arguments: product.id),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            BoxShadow(
-                color: Colors.black.withValues(alpha: 0.07),
-                blurRadius: 10,
-                offset: const Offset(0, 3))
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                ClipRRect(
-                  borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(16)),
-                  child: Container(
-                    height: 120,
-                    width: double.infinity,
-                    color: AppColors.primaryLight.withValues(alpha: 0.15),
-                    child: product.imageUrls.isNotEmpty
-                        ? _ProductImage(
-                            imagePath: product.imageUrls[0],
-                            fit: BoxFit.cover,
-                          )
-                        : const Icon(
-                            Icons.image_outlined,
-                            size: 40,
-                            color: AppColors.primaryLight,
-                          ),
-                  ),
-                ),
-                Positioned(
-                  top: 8, right: 8,
-                  child: GestureDetector(
-                    onTap: () {
-                      final uid =
-                          context.read<AuthProvider>().currentUser!.id;
-                      products.toggleWishlist(product.id, uid);
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      padding: const EdgeInsets.all(6),
-                      decoration: BoxDecoration(
-                        color: isWishlisted
-                            ? AppColors.error.withValues(alpha: 0.9)
-                            : Colors.white.withValues(alpha: 0.9),
-                        shape: BoxShape.circle,
-                        boxShadow: [
-                          BoxShadow(
-                              color:
-                                  Colors.black.withValues(alpha: 0.1),
-                              blurRadius: 4)
-                        ],
-                      ),
-                      child: Icon(
-                        isWishlisted
-                            ? Icons.favorite_rounded
-                            : Icons.favorite_border_rounded,
-                        size: 16,
-                        color: isWishlisted
-                            ? Colors.white
-                            : AppColors.error,
-                      ),
-                    ),
-                  ),
-                ),
-                Positioned(
-                  top: 8, left: 8,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 3),
-                    decoration: BoxDecoration(
-                      color:
-                          AppColors.primaryLight.withValues(alpha: 0.9),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Text(product.categoryLabel,
-                        style: const TextStyle(
-                            fontSize: 9,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700)),
-                  ),
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10, 8, 10, 10),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(product.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.textPrimary,
-                          height: 1.3)),
-                  const SizedBox(height: 6),
-                  Text('₹${product.price.toStringAsFixed(0)}',
-                      style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                          color: AppColors.primary)),
-                  const SizedBox(height: 4),
-                  Row(
-                    children: [
-                      const Icon(Icons.home_outlined,
-                          size: 11, color: AppColors.textSecondary),
-                      const SizedBox(width: 3),
-                      Expanded(
-                        child: Text(product.sellerHostel,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                                fontSize: 10,
-                                color: AppColors.textSecondary)),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-
-// Helper widget to display product images (handles both local files and network URLs)
-class _ProductImage extends StatelessWidget {
-  final String imagePath;
-  final BoxFit fit;
-
-  const _ProductImage({
-    required this.imagePath,
-    this.fit = BoxFit.cover,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    // Check if it's a local file path
-    final isLocalFile = imagePath.startsWith('/') || 
-                        imagePath.contains('\\') || 
-                        !imagePath.startsWith('http');
-
-    if (isLocalFile) {
-      // Display local file image
-      return Image.file(
-        File(imagePath),
-        fit: fit,
-        width: double.infinity,
-        height: double.infinity,
-        errorBuilder: (context, error, stackTrace) {
-          return const Center(
-            child: Icon(
-              Icons.image_outlined,
-              size: 40,
-              color: AppColors.primaryLight,
-            ),
-          );
-        },
-      );
-    } else {
-      // Display network image
-      return Image.network(
-        imagePath,
-        fit: fit,
-        width: double.infinity,
-        height: double.infinity,
-        loadingBuilder: (context, child, progress) {
-          if (progress == null) return child;
-          return const Center(
-            child: SizedBox(
-              width: 24,
-              height: 24,
-              child: CircularProgressIndicator(
-                strokeWidth: 2,
-                color: AppColors.primary,
-              ),
-            ),
-          );
-        },
-        errorBuilder: (context, error, stackTrace) {
-          return const Center(
-            child: Icon(
-              Icons.image_outlined,
-              size: 40,
-              color: AppColors.primaryLight,
-            ),
-          );
-        },
-      );
-    }
   }
 }
