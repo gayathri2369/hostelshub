@@ -5,9 +5,11 @@ import '../../models/product_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/product_provider.dart';
 import '../../providers/chat_provider.dart';
+import '../../providers/review_provider.dart';
 import '../../utils/app_colors.dart';
 import '../../widgets/app_drawer.dart';
 import '../../widgets/back_navigation_guard.dart';
+import 'seller_reviews_screen.dart';
 import '../../main.dart';
 
 class SellerDashboard extends StatefulWidget {
@@ -20,15 +22,34 @@ class _SellerDashboardState extends State<SellerDashboard> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
+  void initState() {
+    super.initState();
+    // Fetch seller reviews
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final auth = context.read<AuthProvider>();
+      final sellerId = auth.currentUser!.id;
+      context.read<ReviewProvider>().fetchReviewsForSeller(sellerId);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final auth = context.watch<AuthProvider>();
     final products = context.watch<ProductProvider>();
     final chats = context.watch<ChatProvider>();
+    final reviews = context.watch<ReviewProvider>();
     final user = auth.currentUser!;
     final myProducts = products.productsForSeller(user.id);
     final sold = myProducts.where((p) => p.status == ProductStatus.sold).length;
     final active = myProducts.where((p) => p.status == ProductStatus.available).length;
     final unread = chats.totalUnreadFor(user.id);
+    
+    // Calculate total reviews for seller
+    final sellerReviews = reviews.getReviewsForSeller(user.id);
+    final totalReviews = sellerReviews.length;
+    final averageRating = totalReviews == 0
+        ? 0.0
+        : sellerReviews.fold<int>(0, (sum, r) => sum + r.rating) / totalReviews;
 
     return BackNavigationGuard(
       isDashboard: true,
@@ -126,6 +147,29 @@ class _SellerDashboardState extends State<SellerDashboard> {
                           icon: Icons.sell_outlined, color: AppColors.secondary),
                     ],
                   ),
+                  const SizedBox(height: 12),
+                  // Reviews stat row
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _StatCard(
+                          label: 'Reviews',
+                          value: '$totalReviews',
+                          icon: Icons.star_rounded,
+                          color: Colors.amber.shade700,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _StatCard(
+                          label: 'Rating',
+                          value: totalReviews > 0 ? averageRating.toStringAsFixed(1) : '0.0',
+                          icon: Icons.rate_review,
+                          color: AppColors.info,
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(height: 28),
                   const Text('Quick Actions',
                       style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700,
@@ -159,6 +203,25 @@ class _SellerDashboardState extends State<SellerDashboard> {
                     children: [
                       Expanded(
                         child: _ActionCard(
+                          icon: Icons.rate_review_outlined,
+                          label: 'My Reviews',
+                          subtitle: totalReviews > 0
+                              ? '${averageRating.toStringAsFixed(1)} ⭐ ($totalReviews)'
+                              : 'No reviews yet',
+                          color: Colors.amber.shade700,
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const SellerReviewsScreen(),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: _ActionCard(
                           icon: Icons.chat_bubble_outline,
                           label: 'Buyer Chats',
                           subtitle: unread > 0 ? '$unread new messages' : 'No new messages',
@@ -167,7 +230,11 @@ class _SellerDashboardState extends State<SellerDashboard> {
                           onTap: () => Navigator.pushNamed(context, AppRoutes.conversations),
                         ),
                       ),
-                      const SizedBox(width: 12),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    children: [
                       Expanded(
                         child: _ActionCard(
                           icon: Icons.swap_horiz_rounded,

@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'providers/auth_provider.dart';
 import 'providers/product_provider.dart';
 import 'providers/chat_provider.dart';
+import 'providers/review_provider.dart';
 import 'utils/app_theme.dart';
 import 'utils/supabase_config.dart';
 import 'services/gemini_vision_service.dart';
@@ -68,6 +69,7 @@ class HostelHubApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProductProvider()),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
+        ChangeNotifierProvider(create: (_) => ReviewProvider()),
       ],
       child: MaterialApp(
         title: 'HostelHub',
