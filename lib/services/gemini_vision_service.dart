@@ -64,13 +64,33 @@ class GeminiVisionService {
   );
 
   static const String _endpoint =
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent';
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent';
 
-  static const String _prompt = '''You are inspecting a photo of a second-hand product listing for a student marketplace app. Classify the item's condition. Respond with ONLY valid JSON, no markdown, no extra text, in this exact shape:
+  static const String _prompt = '''You are an expert product condition inspector analyzing a photo for a student marketplace. Your job is to classify the item's condition accurately.
 
-{"condition": "NEW" | "OLD" | "BROKEN", "is_broken": true | false, "confidence": 0.0-1.0, "reason": "one short sentence"}
+IMPORTANT GUIDELINES:
+- NEW: Item appears unused, pristine, with original packaging/tags, no visible wear or marks
+- OLD: Item shows signs of use - scratches, wear, fading, stains, but is still functional and usable
+- BROKEN: Item has severe damage - cracks, missing parts, torn, completely non-functional, or major defects
 
-Rules: BROKEN means visible damage, cracks, missing parts, or clear malfunction. NEW means unused/like-new with no visible wear. OLD means visible wear but fully usable. If uncertain, prefer OLD over BROKEN.''';
+BE ACCURATE:
+- If you see ANY signs of wear, marks, or use → classify as OLD (not NEW)
+- Only classify as NEW if the item looks completely unused and pristine
+- Only classify as BROKEN if there's serious damage that makes it unusable
+- When in doubt between NEW and OLD → choose OLD
+- When in doubt between OLD and BROKEN → choose OLD
+
+Respond with ONLY valid JSON (no markdown, no extra text):
+{"condition": "NEW" | "OLD" | "BROKEN", "is_broken": true | false, "confidence": 0.0-1.0, "reason": "brief explanation"}
+
+Examples:
+- Phone with scratches → OLD
+- Book with bent corners → OLD  
+- Clothes with slight fading → OLD
+- Electronics with dents → OLD
+- Furniture with scuffs → OLD
+- Completely unused item in box → NEW
+- Cracked screen/broken parts → BROKEN''';
 
   /// Detect product condition from image file
   static Future<ProductConditionResult> detectCondition(String imagePath) async {

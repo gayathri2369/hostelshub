@@ -110,9 +110,51 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 color: AppColors.textPrimary, height: 1.2)),
                       ),
                       const SizedBox(width: 12),
-                      Text('₹${product.price.toStringAsFixed(0)}',
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800,
-                              color: AppColors.primary)),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text('₹${product.price.toStringAsFixed(0)}',
+                              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w800,
+                                  color: AppColors.primary)),
+                          if (product.totalReviews > 0) ...[
+                            const SizedBox(height: 4),
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    _getRatingColor(product.averageRating),
+                                    _getRatingColor(product.averageRating).withValues(alpha: 0.8),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: _getRatingColor(product.averageRating).withValues(alpha: 0.3),
+                                    blurRadius: 8,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  const Icon(Icons.star_rounded, size: 14, color: Colors.white),
+                                  const SizedBox(width: 4),
+                                  Text(
+                                    '${(product.ratingPercentage * 100).toInt()}%',
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ],
+                      ),
                     ],
                   ),
                   const SizedBox(height: 10),
@@ -170,6 +212,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     const months = ['Jan','Feb','Mar','Apr','May','Jun',
         'Jul','Aug','Sep','Oct','Nov','Dec'];
     return '${dt.day} ${months[dt.month - 1]} ${dt.year}';
+  }
+
+  Color _getRatingColor(double rating) {
+    if (rating >= 4.5) return Colors.green;
+    if (rating >= 3.5) return Colors.lightGreen;
+    if (rating >= 2.5) return Colors.orange;
+    if (rating >= 1.5) return Colors.deepOrange;
+    return Colors.red;
   }
 }
 

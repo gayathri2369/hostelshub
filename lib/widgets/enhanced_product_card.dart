@@ -19,17 +19,24 @@ class EnhancedProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shadowColor: AppColors.primary.withValues(alpha: 0.2),
-      shape: RoundedRectangleBorder(
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.08),
+            blurRadius: 12,
+            offset: const Offset(0, 4),
+          ),
+        ],
       ),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             // Product Image with Wishlist Button
             Stack(
@@ -44,20 +51,47 @@ class EnhancedProductCard extends StatelessWidget {
                             imageUrl: product.imageUrls.first,
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Container(
-                              color: Colors.grey[200],
+                              color: AppColors.primaryLight.withValues(alpha: 0.1),
                               child: const Center(
                                 child: CircularProgressIndicator(strokeWidth: 2),
                               ),
                             ),
                             errorWidget: (context, url, error) => Container(
-                              color: Colors.grey[200],
-                              child: const Icon(Icons.shopping_bag, size: 50, color: Colors.grey),
+                              color: AppColors.primaryLight.withValues(alpha: 0.1),
+                              child: Icon(Icons.image_outlined, size: 50, color: AppColors.primaryLight),
                             ),
                           )
                         : Container(
-                            color: Colors.grey[200],
-                            child: const Icon(Icons.shopping_bag, size: 50, color: Colors.grey),
+                            color: AppColors.primaryLight.withValues(alpha: 0.1),
+                            child: Icon(Icons.image_outlined, size: 50, color: AppColors.primaryLight),
                           ),
+                  ),
+                ),
+
+                // Category Badge - Top Left
+                Positioned(
+                  top: 8,
+                  left: 8,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary,
+                      borderRadius: BorderRadius.circular(8),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.2),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                    child: Text(
+                      product.categoryLabel,
+                      style: const TextStyle(
+                        fontSize: 9,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
 
@@ -65,20 +99,26 @@ class EnhancedProductCard extends StatelessWidget {
                 if (product.status != ProductStatus.available)
                   Positioned(
                     top: 8,
-                    left: 8,
+                    right: showWishlist ? 48 : 8,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: product.status == ProductStatus.sold
-                            ? Colors.red
-                            : Colors.orange,
-                        borderRadius: BorderRadius.circular(20),
+                            ? AppColors.error
+                            : AppColors.warning,
+                        borderRadius: BorderRadius.circular(8),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.2),
+                            blurRadius: 4,
+                          ),
+                        ],
                       ),
                       child: Text(
                         product.statusLabel.toUpperCase(),
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 10,
+                          fontSize: 9,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -92,17 +132,17 @@ class EnhancedProductCard extends StatelessWidget {
                     right: 8,
                     child: Material(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      elevation: 2,
+                      shape: const CircleBorder(),
+                      elevation: 4,
                       child: InkWell(
                         onTap: onWishlistToggle,
-                        borderRadius: BorderRadius.circular(20),
+                        customBorder: const CircleBorder(),
                         child: Container(
                           padding: const EdgeInsets.all(8),
                           child: Icon(
                             product.isWishlisted ? Icons.favorite : Icons.favorite_border,
-                            color: product.isWishlisted ? Colors.red : Colors.grey[600],
-                            size: 20,
+                            color: product.isWishlisted ? AppColors.error : Colors.grey[600],
+                            size: 18,
                           ),
                         ),
                       ),
@@ -112,95 +152,71 @@ class EnhancedProductCard extends StatelessWidget {
             ),
 
             // Product Details
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Product Title
-                    Text(
-                      product.title,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
-                      ),
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Product Title
+                  Text(
+                    product.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.textPrimary,
+                      height: 1.3,
                     ),
-                    const SizedBox(height: 4),
+                  ),
+                  const SizedBox(height: 8),
 
-                    // Category Badge
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary.withValues(alpha: 0.1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        product.categoryLabel,
-                        style: TextStyle(
-                          fontSize: 10,
+                  // Rating Section
+                  _buildRatingSection(),
+                  const SizedBox(height: 10),
+
+                  // Price and View Button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      // Price
+                      Text(
+                        '₹${product.price.toStringAsFixed(0)}',
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
                           color: AppColors.primary,
-                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
 
-                    // Rating Section
-                    _buildRatingSection(),
-
-                    const Spacer(),
-
-                    // Price Section
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        // Price
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Price',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                            Text(
-                              '₹${product.price.toStringAsFixed(0)}',
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
-                              ),
+                      // View Button
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                        decoration: BoxDecoration(
+                          gradient: AppColors.primaryGradient,
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.primary.withValues(alpha: 0.3),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
                             ),
                           ],
                         ),
-
-                        // View Button
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                          decoration: BoxDecoration(
-                            gradient: AppColors.primaryGradient,
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          child: const Text(
-                            'View',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                              fontWeight: FontWeight.bold,
-                            ),
+                        child: const Text(
+                          'View',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ],
@@ -211,25 +227,34 @@ class EnhancedProductCard extends StatelessWidget {
 
   Widget _buildRatingSection() {
     if (product.totalReviews == 0) {
-      return Row(
-        children: [
-          Icon(Icons.star_border, size: 14, color: Colors.grey[400]),
-          const SizedBox(width: 4),
-          Text(
-            'No reviews yet',
-            style: TextStyle(
-              fontSize: 11,
-              color: Colors.grey[600],
+      return Container(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(Icons.star_border_rounded, size: 14, color: Colors.grey[400]),
+            const SizedBox(width: 4),
+            Text(
+              'No reviews',
+              style: TextStyle(
+                fontSize: 10,
+                color: Colors.grey[600],
+                fontWeight: FontWeight.w500,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       );
     }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Stars and Rating Number
+        // Stars and Rating
         Row(
           children: [
             _buildStars(product.averageRating),
@@ -237,9 +262,9 @@ class EnhancedProductCard extends StatelessWidget {
             Text(
               product.averageRating.toStringAsFixed(1),
               style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                fontSize: 13,
+                fontWeight: FontWeight.w800,
+                color: AppColors.textPrimary,
               ),
             ),
             const SizedBox(width: 4),
@@ -248,35 +273,60 @@ class EnhancedProductCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.grey[600],
+                fontWeight: FontWeight.w500,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 4),
+        const SizedBox(height: 6),
 
-        // Rating Progress Bar
+        // Progress Bar with Percentage
         Row(
           children: [
             Expanded(
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: product.ratingPercentage,
-                  minHeight: 6,
-                  backgroundColor: Colors.grey[200],
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    _getRatingColor(product.averageRating),
+              child: Container(
+                height: 8,
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: FractionallySizedBox(
+                  alignment: Alignment.centerLeft,
+                  widthFactor: product.ratingPercentage,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          _getRatingColor(product.averageRating),
+                          _getRatingColor(product.averageRating).withValues(alpha: 0.8),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: [
+                        BoxShadow(
+                          color: _getRatingColor(product.averageRating).withValues(alpha: 0.3),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-            const SizedBox(width: 6),
-            Text(
-              '${(product.ratingPercentage * 100).toInt()}%',
-              style: TextStyle(
-                fontSize: 10,
-                fontWeight: FontWeight.w600,
-                color: _getRatingColor(product.averageRating),
+            const SizedBox(width: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: _getRatingColor(product.averageRating).withValues(alpha: 0.15),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                '${(product.ratingPercentage * 100).toInt()}%',
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w800,
+                  color: _getRatingColor(product.averageRating),
+                ),
               ),
             ),
           ],

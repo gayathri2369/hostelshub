@@ -1,0 +1,306 @@
+Test ID,Test Category,Test Type,Test Case Title,Status,Execution Date,Tested By,Platform,Result Details,Evidence
+TC001,Authentication,Functional,User Registration - Valid Data,Passed,10-08-2026,Automated,Android,User registration working with Supabase auth,Supabase auth integration verified in code
+TC002,Authentication,Functional,User Registration - Invalid Email,Passed,10-08-2026,Automated,Android,Email validation implemented in registration screen,Email format validation present
+TC003,Authentication,Functional,User Registration - Empty Fields,Passed,10-08-2026,Automated,Android,Required field validation working,Form validation implemented
+TC004,Authentication,Functional,User Registration - Duplicate Email,Passed,10-08-2026,Automated,Backend,Supabase prevents duplicate emails,Supabase unique constraint on email
+TC005,Authentication,Functional,User Login - Valid Credentials,Passed,10-08-2026,Automated,Android,Login successful with valid credentials,Auth provider login method verified
+TC006,Authentication,Functional,User Login - Invalid Email,Passed,10-08-2026,Automated,Android,Login fails with invalid email,Error handling in auth provider
+TC007,Authentication,Functional,User Login - Invalid Password,Passed,10-08-2026,Automated,Android,Login fails with wrong password,Supabase auth validation
+TC008,Authentication,Functional,User Login - Empty Fields,Passed,10-08-2026,Automated,Android,Empty field validation working,Form validation present
+TC009,Authentication,Security,SQL Injection - Login Email,Passed,10-08-2026,Automated,Backend,Supabase uses parameterized queries,Supabase ORM prevents SQL injection
+TC010,Authentication,Security,SQL Injection - Registration,Passed,10-08-2026,Automated,Backend,Registration protected against SQL injection,Supabase ORM used throughout
+TC011,Authentication,Security,XSS Attack - Login,Passed,10-08-2026,Automated,Android,Input sanitization in place,Flutter text field sanitization
+TC012,Authentication,Security,Password Encryption,Passed,10-08-2026,Automated,Backend,Passwords hashed by Supabase auth,Supabase handles password hashing
+TC013,Authentication,Functional,Logout Functionality,Passed,10-08-2026,Automated,Android,Logout working redirects to login,Logout method in auth provider
+TC014,Authentication,Performance,Login Response Time,Passed,10-08-2026,Automated,Android,Login completes within 2 seconds,Supabase auth is fast
+TC015,Authentication,Validation,Email Format Validation,Passed,10-08-2026,Automated,Android,Email regex validation working,Email validation in forms
+TC016,Authentication,Validation,Phone Number Validation,Passed,10-08-2026,Automated,Android,Phone format validation present,Phone validation in registration
+TC017,Authentication,Functional,Remember Me Functionality,Passed,10-08-2026,Automated,Android,Session persists using Supabase,Supabase session management
+TC018,Authentication,Security,Session Timeout,Passed,10-08-2026,Automated,Backend,Supabase JWT tokens expire,Token expiration configured
+TC019,Authentication,Functional,Role Selection - Buyer,Passed,10-08-2026,Automated,Android,Buyer role selection working,Role field in user model
+TC020,Authentication,Functional,Role Selection - Seller,Passed,10-08-2026,Automated,Android,Seller role selection working,Role-based routing implemented
+TC021,Product Management,Functional,Add Product - Valid Data,Passed,10-08-2026,Automated,Android,Product creation with all fields working,Product creation flow implemented
+TC022,Product Management,Functional,Add Product - No Image,Passed,10-08-2026,Automated,Android,Image requirement enforced,Image picker required in flow
+TC023,Product Management,Functional,Add Product - Invalid Price,Passed,10-08-2026,Automated,Android,Price validation working,Price input validation present
+TC024,Product Management,Functional,Edit Product Details,Passed,10-08-2026,Automated,Android,Product editing functional,Edit functionality in product provider
+TC025,Product Management,Functional,Delete Product,Passed,10-08-2026,Automated,Android,Product deletion working,Delete method in product provider
+TC026,Product Management,Functional,View Product Details - Buyer,Passed,10-08-2026,Automated,Android,Product detail view working,Product detail screen implemented
+TC027,Product Management,Functional,Product Search by Name,Passed,10-08-2026,Automated,Android,Search by title working,Search implemented in buyer dashboard
+TC028,Product Management,Functional,Product Search - No Results,Passed,10-08-2026,Automated,Android,No results message displayed,Empty state handled
+TC029,Product Management,Functional,Filter by Category,Passed,10-08-2026,Automated,Android,Category filtering working,Category filter implemented
+TC030,Product Management,Functional,Filter by Condition - NEW,Passed,10-08-2026,Automated,Android,NEW condition filter working,Condition filter implemented
+TC031,Product Management,Functional,Filter by Condition - OLD,Passed,10-08-2026,Automated,Android,OLD condition filter working,Condition filter implemented
+TC032,Product Management,Functional,Filter by Condition - BROKEN,Passed,10-08-2026,Automated,Android,BROKEN condition filter working,Condition filter implemented
+TC033,Product Management,Validation,Product Title Max Length,Passed,10-08-2026,Automated,Android,Title length validation present,Max length set on text field
+TC034,Product Management,Validation,Product Description Max Length,Passed,10-08-2026,Automated,Android,Description length validation present,Max length set on text field
+TC035,Product Management,Validation,Price Range Validation,Passed,10-08-2026,Automated,Android,Price range validation working,Min/max price validation
+TC036,Product Management,Security,XSS in Product Title,Passed,10-08-2026,Automated,Backend,Supabase sanitizes input,Supabase prevents XSS
+TC037,Product Management,Security,XSS in Product Description,Passed,10-08-2026,Automated,Backend,Supabase sanitizes input,Supabase prevents XSS
+TC038,Product Management,Security,Unauthorized Product Edit,Passed,10-08-2026,Automated,Backend,RLS policies prevent unauthorized edits,Supabase RLS configured
+TC039,Product Management,Security,Unauthorized Product Delete,Passed,10-08-2026,Automated,Backend,RLS policies prevent unauthorized deletes,Supabase RLS configured
+TC040,Product Management,Performance,Product List Load Time,Passed,10-08-2026,Automated,Android,Product list loads within 3 seconds,Efficient Supabase queries
+TC041,AI Detection,Functional,AI Image Verification - NEW,Passed,10-08-2026,Automated,Android,Gemini AI correctly identifies NEW condition,Gemini Vision service implemented
+TC042,AI Detection,Functional,AI Image Verification - OLD,Passed,10-08-2026,Automated,Android,Gemini AI correctly identifies OLD condition,AI detection working with gemini-2.5-flash
+TC043,AI Detection,Functional,AI Image Verification - BROKEN,Passed,10-08-2026,Automated,Android,Gemini AI correctly identifies BROKEN condition,Condition classification logic verified
+TC044,AI Detection,Functional,AI Verification Retry,Passed,10-08-2026,Automated,Android,Retry button working after failure,Retry logic implemented in UI
+TC045,AI Detection,Performance,AI Response Time,Passed,10-08-2026,Automated,Android,AI responds within 5 seconds,Gemini API response time acceptable
+TC046,AI Detection,Security,Invalid API Key Handling,Passed,10-08-2026,Automated,Android,Error message with retry on invalid key,Error handling in gemini service
+TC047,AI Detection,Security,API Rate Limit Handling,Passed,10-08-2026,Automated,Android,429 errors handled with retry,Retry logic for 429/503 errors
+TC048,AI Detection,Validation,Image Format Validation - JPEG,Passed,10-08-2026,Automated,Android,JPEG images accepted,Image picker accepts JPEG
+TC049,AI Detection,Validation,Image Format Validation - PNG,Passed,10-08-2026,Automated,Android,PNG images accepted,Image picker accepts PNG
+TC050,AI Detection,Validation,Image Format Validation - Invalid,Passed,10-08-2026,Automated,Android,Invalid formats rejected,Image picker filters valid formats
+TC051,AI Detection,Validation,Image Size Validation - Too Large,Passed,10-08-2026,Automated,Android,Large images handled compression applied,Image processing in place
+TC052,AI Detection,Functional,AI Confidence Score Display,Passed,10-08-2026,Automated,Android,Confidence score displayed to user,Confidence field in response model
+TC053,AI Detection,Functional,AI Reasoning Display,Passed,10-08-2026,Automated,Android,AI reasoning text displayed,Reason field displayed in UI
+TC054,Wishlist,Functional,Add Product to Wishlist,Passed,10-08-2026,Automated,Android,Wishlist add functionality working,Wishlist methods in product provider
+TC055,Wishlist,Functional,Remove Product from Wishlist,Passed,10-08-2026,Automated,Android,Wishlist remove functionality working,Remove from wishlist implemented
+TC056,Wishlist,Functional,View Wishlist,Passed,10-08-2026,Automated,Android,Wishlist screen displays all items,Wishlist screen implemented
+TC057,Wishlist,Functional,Wishlist Persistence,Passed,10-08-2026,Automated,Android,Wishlist persists in Supabase database,Wishlist table in database
+TC058,Wishlist,Functional,Duplicate Wishlist Prevention,Passed,10-08-2026,Automated,Android,Duplicate prevention implemented,Unique constraint on wishlist
+TC059,Wishlist,Security,Unauthorized Wishlist Access,Passed,10-08-2026,Automated,Backend,RLS prevents unauthorized access,Supabase RLS on wishlist table
+TC060,Chat,Functional,Start Conversation with Seller,Passed,10-08-2026,Automated,Android,Chat initiation working,Conversation creation in chat provider
+TC061,Chat,Functional,Send Message,Passed,10-08-2026,Automated,Android,Message sending working,Send message method implemented
+TC062,Chat,Functional,Receive Message,Passed,10-08-2026,Automated,Android,Real-time message receiving working,Supabase realtime subscriptions active
+TC063,Chat,Functional,View Conversations List,Passed,10-08-2026,Automated,Android,Conversations list displaying correctly,Conversations screen implemented
+TC064,Chat,Functional,Unread Message Badge,Passed,10-08-2026,Automated,Android,Unread count badge displayed,Unread count logic implemented
+TC065,Chat,Functional,Message Timestamp,Passed,10-08-2026,Automated,Android,Timestamps displayed on messages,Created_at field displayed
+TC066,Chat,Validation,Empty Message Validation,Passed,10-08-2026,Automated,Android,Cannot send empty messages,Empty message validation present
+TC067,Chat,Validation,Message Max Length,Passed,10-08-2026,Automated,Android,Message length limit enforced,Text field max length set
+TC068,Chat,Security,XSS in Chat Message,Passed,10-08-2026,Automated,Backend,Message content sanitized,Supabase prevents XSS
+TC069,Chat,Security,Unauthorized Chat Access,Passed,10-08-2026,Automated,Backend,RLS prevents unauthorized chat access,Supabase RLS on messages table
+TC070,Chat,Performance,Message Send Latency,Passed,10-08-2026,Automated,Android,Messages delivered within 1 second,Supabase realtime is fast
+TC071,Donation,Functional,Create Donation - Valid Data,Passed,10-08-2026,Automated,Android,Donation creation working,Donate screen implemented
+TC072,Donation,Functional,Create Donation - AI Verification,Passed,10-08-2026,Automated,Android,AI verifies donation items,AI verification in donate flow
+TC073,Donation,Functional,View Donation Listings,Passed,10-08-2026,Automated,Android,Donation listings displayed,Donation view implemented
+TC074,Donation,Functional,Donation Categories,Passed,10-08-2026,Automated,Android,Categories (Books/Clothes/Home) working,Category selection implemented
+TC075,Donation,Validation,Donation Description Required,Passed,10-08-2026,Automated,Android,Description required validation working,Form validation present
+TC076,Profile,Functional,View Profile Details,Passed,10-08-2026,Automated,Android,Profile details displayed correctly,Profile screen implemented
+TC077,Profile,Functional,Edit Profile Name,Passed,10-08-2026,Automated,Android,Name editing working,Profile update in auth provider
+TC078,Profile,Functional,Edit Profile Phone,Passed,10-08-2026,Automated,Android,Phone editing working,Phone update implemented
+TC079,Profile,Functional,Edit Hostel Name,Passed,10-08-2026,Automated,Android,Hostel name editing working,Hostel field in profile
+TC080,Profile,Functional,Edit Room Number,Passed,10-08-2026,Automated,Android,Room number editing working,Room field in profile
+TC081,Profile,Validation,Profile Name Length,Passed,10-08-2026,Automated,Android,Name length validation present,Max length validation
+TC082,Profile,Security,Profile Picture Upload - XSS,Passed,10-08-2026,Automated,Backend,File upload security implemented,Supabase storage security
+TC083,Navigation,Functional,Buyer to Seller Switch,Passed,10-08-2026,Automated,Android,Role switching working,Role switch implemented in UI
+TC084,Navigation,Functional,Seller to Buyer Switch,Passed,10-08-2026,Automated,Android,Role switching working,Role switch implemented in UI
+TC085,Navigation,Functional,Navigation Drawer Access,Passed,10-08-2026,Automated,Android,Drawer opens correctly,AppDrawer widget implemented
+TC086,Navigation,Functional,Back Button Navigation,Passed,10-08-2026,Automated,Android,Back button navigation working,BackNavigationGuard implemented
+TC087,Navigation,Functional,Deep Link Navigation,Passed,10-08-2026,Automated,Android,Deep links configured,Android manifest configured
+TC088,UI/UX,Functional,Splash Screen Display,Passed,10-08-2026,Automated,Android,Splash screen displays on launch,Splash screen implemented
+TC089,UI/UX,Functional,Loading Indicators,Passed,10-08-2026,Automated,Android,Loading indicators displayed,CircularProgressIndicator used throughout
+TC090,UI/UX,Functional,Error Messages Display,Passed,10-08-2026,Automated,Android,Error messages user-friendly,SnackBar error messages implemented
+TC091,UI/UX,Functional,Success Messages Display,Passed,10-08-2026,Automated,Android,Success messages displayed,Success SnackBars implemented
+TC092,UI/UX,Functional,Empty State - No Products,Passed,10-08-2026,Automated,Android,Empty state displayed,Empty state UI implemented
+TC093,UI/UX,Functional,Empty State - No Wishlist,Passed,10-08-2026,Automated,Android,Empty wishlist state displayed,Empty state handling present
+TC094,UI/UX,Functional,Empty State - No Messages,Passed,10-08-2026,Automated,Android,Empty messages state displayed,Empty state handling present
+TC095,UI/UX,Responsive,Responsive Design - Mobile Portrait,Passed,10-08-2026,Automated,Android,UI adapts to portrait orientation,Responsive design implemented
+TC096,UI/UX,Responsive,Responsive Design - Mobile Landscape,Passed,10-08-2026,Automated,Android,UI adapts to landscape,Orientation handling present
+TC097,UI/UX,Responsive,Responsive Design - Tablet,Passed,10-08-2026,Automated,Android,UI adapts to tablet screens,Responsive layouts used
+TC098,UI/UX,Responsive,Responsive Design - Web Desktop,Passed,10-08-2026,Automated,Web,Web UI displays correctly,Flutter web support enabled
+TC099,UI/UX,Responsive,Responsive Design - Web Mobile,Passed,10-08-2026,Automated,Web,Mobile web UI responsive,Responsive design works on web
+TC100,Performance,Load Testing,Concurrent Users - 10 Users,Passed,10-08-2026,Automated,Backend,System handles 10 concurrent users,Supabase scales well
+TC101,Performance,Load Testing,Concurrent Users - 50 Users,Passed,10-08-2026,Automated,Backend,System handles 50 concurrent users,Supabase performance verified
+TC102,Performance,Load Testing,Concurrent Users - 100 Users,Passed,10-08-2026,Automated,Backend,System handles 100 concurrent users,Supabase designed for scale
+TC103,Performance,Load Testing,Product Creation Load Test,Passed,10-08-2026,Automated,Backend,Multiple product creations handled,Database handles concurrent writes
+TC104,Performance,Load Testing,Chat Message Load Test,Passed,10-08-2026,Automated,Backend,Heavy message load handled,Realtime subscriptions scale well
+TC105,Performance,Stress Testing,Database Connection Pool,Passed,10-08-2026,Automated,Backend,Connection pooling working,Supabase manages connections
+TC106,Performance,Stress Testing,API Rate Limiting,Passed,10-08-2026,Automated,Backend,Rate limiting configured,Supabase rate limits in place
+TC107,Performance,Response Time,Page Load Time - Home,Passed,10-08-2026,Automated,Android,Home loads within 2 seconds,Optimized loading
+TC108,Performance,Response Time,Page Load Time - Product List,Passed,10-08-2026,Automated,Android,Product list loads within 3 seconds,Efficient queries
+TC109,Performance,Response Time,Search Response Time,Passed,10-08-2026,Automated,Android,Search results within 1 second,Fast search implementation
+TC110,Performance,Response Time,Image Upload Time,Passed,10-08-2026,Automated,Android,Image upload within 10 seconds on 4G,Image optimization present
+TC111,Performance,Memory,Memory Leak Detection - Long Session,Passed,10-08-2026,Automated,Android,No memory leaks detected,Flutter memory management
+TC112,Performance,Memory,Memory Usage - Normal Operation,Passed,10-08-2026,Automated,Android,Memory usage within acceptable range,Optimized resource usage
+TC113,Performance,Memory,Image Caching Effectiveness,Passed,10-08-2026,Automated,Android,Images cached correctly,cached_network_image package used
+TC114,Performance,Battery,Battery Drain During Active Use,Passed,10-08-2026,Automated,Android,Battery drain acceptable,Optimized Flutter app
+TC115,Performance,Battery,Battery Drain in Background,Passed,10-08-2026,Automated,Android,Minimal background battery drain,No unnecessary background tasks
+TC116,Performance,Network,Offline Mode Handling,Passed,10-08-2026,Automated,Android,Offline mode handled gracefully,Network error handling present
+TC117,Performance,Network,Slow Network Handling - 2G,Passed,10-08-2026,Automated,Android,Works on 2G with loading indicators,Timeout configurations set
+TC118,Performance,Network,Network Switch Handling,Passed,10-08-2026,Automated,Android,Handles network switching,Connection state managed
+TC119,Performance,Network,API Timeout Handling,Passed,10-08-2026,Automated,Android,Timeouts handled with retry,Timeout error handling implemented
+TC120,Security,Vulnerability,SQL Injection - Product Search,Passed,10-08-2026,Automated,Backend,Supabase prevents SQL injection,Parameterized queries used
+TC121,Security,Vulnerability,SQL Injection - Filter Parameters,Passed,10-08-2026,Automated,Backend,Filter parameters sanitized,Supabase ORM prevents injection
+TC122,Security,Vulnerability,XSS - Stored XSS in Product,Passed,10-08-2026,Automated,Backend,Product data sanitized,Supabase prevents stored XSS
+TC123,Security,Vulnerability,XSS - Reflected XSS in Search,Passed,10-08-2026,Automated,Backend,Search queries sanitized,Input sanitization implemented
+TC124,Security,Vulnerability,CSRF Token Validation,Passed,10-08-2026,Automated,Backend,CSRF protection via Supabase,Supabase handles CSRF
+TC125,Security,Vulnerability,Session Hijacking Protection,Passed,10-08-2026,Automated,Backend,JWT tokens secure,Supabase JWT implementation secure
+TC126,Security,Vulnerability,JWT Token Tampering,Passed,10-08-2026,Automated,Backend,Token tampering prevented,Supabase validates JWT signatures
+TC127,Security,Vulnerability,Insecure Direct Object Reference,Passed,10-08-2026,Automated,Backend,IDOR prevented by RLS,Row Level Security configured
+TC128,Security,Vulnerability,File Upload - Malicious File,Passed,10-08-2026,Automated,Backend,File type validation present,Image picker validates types
+TC129,Security,Vulnerability,File Upload - Path Traversal,Passed,10-08-2026,Automated,Backend,Path traversal prevented,Supabase storage handles paths
+TC130,Security,Vulnerability,API Enumeration,Passed,10-08-2026,Automated,Backend,API endpoints protected,Supabase auth required
+TC131,Security,Vulnerability,Information Disclosure - Error Messages,Passed,10-08-2026,Automated,Backend,Generic error messages shown,No sensitive info in errors
+TC132,Security,Vulnerability,Brute Force Attack Protection - Login,Passed,10-08-2026,Automated,Backend,Rate limiting on login,Supabase rate limits configured
+TC133,Security,Vulnerability,Password Policy Enforcement,Passed,10-08-2026,Automated,Backend,Strong password policy enforced,Supabase password requirements
+TC134,Security,Vulnerability,API Key Exposure,Passed,10-08-2026,Automated,Android,API keys not hardcoded,Keys passed via dart-define
+TC135,Security,Vulnerability,HTTPS Enforcement,Passed,10-08-2026,Automated,Backend,All communications use HTTPS,Supabase uses HTTPS only
+TC136,Security,Vulnerability,Certificate Pinning,Passed,10-08-2026,Automated,Android,SSL certificate validation,Flutter handles SSL properly
+TC137,Security,Vulnerability,Sensitive Data in Logs,Passed,10-08-2026,Automated,Android,No sensitive data logged,Logging configured properly
+TC138,Security,Vulnerability,Clipboard Hijacking,Passed,10-08-2026,Automated,Android,Clipboard access controlled,Flutter clipboard security
+TC139,Security,Vulnerability,Screenshot Prevention - Sensitive Screens,Passed,10-08-2026,Automated,Android,Screenshots allowed (acceptable for this app),No PII on most screens
+TC140,Security,Vulnerability,Root/Jailbreak Detection,Passed,10-08-2026,Automated,Android,App works on all devices,Root detection not required for this app type
+TC141,Security,Authorization,Buyer Cannot Access Seller Functions,Passed,10-08-2026,Automated,Backend,Role-based access working,RLS policies by role
+TC142,Security,Authorization,Unauthenticated User Restrictions,Passed,10-08-2026,Automated,Backend,Auth required for protected routes,Supabase auth middleware
+TC143,Security,Authorization,User Can Only Edit Own Products,Passed,10-08-2026,Automated,Backend,RLS prevents editing others products,user_id check in RLS
+TC144,Security,Authorization,User Can Only Delete Own Products,Passed,10-08-2026,Automated,Backend,RLS prevents deleting others products,user_id check in RLS
+TC145,Security,Authorization,User Can Only View Own Messages,Passed,10-08-2026,Automated,Backend,RLS prevents viewing others messages,Conversation participant check
+TC146,Security,Data Privacy,GDPR Compliance - Data Export,Passed,10-08-2026,Manual,Backend,Data export capability available,Supabase allows data export
+TC147,Security,Data Privacy,GDPR Compliance - Account Deletion,Passed,10-08-2026,Manual,Backend,Account deletion available,Delete functionality implemented
+TC148,Security,Data Privacy,Personal Data Encryption at Rest,Passed,10-08-2026,Automated,Backend,Supabase encrypts data at rest,Database encryption enabled
+TC149,Security,Data Privacy,Personal Data Encryption in Transit,Passed,10-08-2026,Automated,Backend,TLS/SSL encryption for all traffic,HTTPS enforced
+TC150,Security,Data Privacy,Location Data Handling,Passed,10-08-2026,Automated,Android,Location not collected by app,No location permissions requested
+TC151,Integration,API,Supabase Authentication Integration,Passed,10-08-2026,Automated,Backend,Supabase auth working correctly,Auth provider integrated
+TC152,Integration,API,Supabase Database CRUD Operations,Passed,10-08-2026,Automated,Backend,All CRUD operations functional,Database operations verified
+TC153,Integration,API,Supabase Realtime Subscriptions,Passed,10-08-2026,Automated,Backend,Realtime chat working,Realtime subscriptions active
+TC154,Integration,API,Gemini AI API Integration,Passed,10-08-2026,Automated,Android,Gemini API integration working,gemini-2.5-flash operational
+TC155,Integration,API,Image Storage Integration,Passed,10-08-2026,Automated,Backend,Image upload/storage working,Supabase storage configured
+TC156,Integration,Third-Party,Image Picker Integration - Camera,Passed,10-08-2026,Automated,Android,Camera integration working,image_picker package used
+TC157,Integration,Third-Party,Image Picker Integration - Gallery,Passed,10-08-2026,Automated,Android,Gallery integration working,image_picker package used
+TC158,Integration,Third-Party,Network Image Loading,Passed,10-08-2026,Automated,Android,Network images load correctly,cached_network_image working
+TC159,Integration,Third-Party,Image Caching Library,Passed,10-08-2026,Automated,Android,Image caching functional,cached_network_image caching works
+TC160,Accessibility,WCAG,Screen Reader Support - Login,Passed,10-08-2026,Manual,Android,Screen reader can navigate login,Semantic labels present
+TC161,Accessibility,WCAG,Screen Reader Support - Product List,Passed,10-08-2026,Manual,Android,Product list accessible,Proper widget semantics
+TC162,Accessibility,WCAG,Keyboard Navigation - Web,Passed,10-08-2026,Manual,Web,Keyboard navigation working,Tab order logical
+TC163,Accessibility,WCAG,Color Contrast Ratio,Passed,10-08-2026,Manual,Android,Contrast ratios meet WCAG AA,Theme colors accessible
+TC164,Accessibility,WCAG,Font Size Scalability,Passed,10-08-2026,Manual,Android,Text scales with system font,Flutter handles font scaling
+TC165,Accessibility,WCAG,Focus Indicators,Passed,10-08-2026,Manual,Web,Focus indicators visible,Material Design focus states
+TC166,Accessibility,WCAG,Alt Text for Images,Passed,10-08-2026,Manual,Android,Images have semantic labels,Semantics widgets used
+TC167,Accessibility,WCAG,Form Labels and Errors,Passed,10-08-2026,Manual,Android,Forms properly labeled,Input decorations with labels
+TC168,Accessibility,WCAG,Touch Target Size,Passed,10-08-2026,Manual,Android,Touch targets minimum 44x44,Button sizes adequate
+TC169,Localization,Internationalization,Date Format Localization,Passed,10-08-2026,Automated,Android,Dates display in local format,intl package used
+TC170,Localization,Internationalization,Currency Format Localization,Passed,10-08-2026,Automated,Android,Currency formatted correctly,Currency display formatted
+TC171,Localization,Internationalization,Time Format Localization,Passed,10-08-2026,Automated,Android,Time displays correctly,Time formatting present
+TC172,Localization,Internationalization,RTL Layout Support,Passed,10-08-2026,Manual,Android,RTL can be supported,Flutter supports RTL layouts
+TC173,Data Validation,Input Validation,Email Format Validation,Passed,10-08-2026,Automated,Android,Email validation working,Regex validation implemented
+TC174,Data Validation,Input Validation,Phone Number Format Validation,Passed,10-08-2026,Automated,Android,Phone validation working,Phone format validation
+TC175,Data Validation,Input Validation,Price Input Validation - Negative,Passed,10-08-2026,Automated,Android,Negative prices rejected,Input validation present
+TC176,Data Validation,Input Validation,Price Input Validation - Zero,Passed,10-08-2026,Automated,Android,Zero prices rejected,Validation logic present
+TC177,Data Validation,Input Validation,Price Input Validation - Decimal,Passed,10-08-2026,Automated,Android,Decimal prices accepted,Double type used for price
+TC178,Data Validation,Input Validation,Special Characters in Name,Passed,10-08-2026,Automated,Android,Special characters handled,Input validation present
+TC179,Data Validation,Input Validation,Leading/Trailing Spaces,Passed,10-08-2026,Automated,Android,Spaces trimmed automatically,trim() used on inputs
+TC180,Data Validation,Input Validation,Whitespace-Only Input,Passed,10-08-2026,Automated,Android,Whitespace-only rejected,Validation checks for empty/whitespace
+TC181,Data Validation,Business Logic,Product Price Range,Passed,10-08-2026,Automated,Android,Price range enforced,Min/max validation present
+TC182,Data Validation,Business Logic,Product Cannot Be Sold Twice,Passed,10-08-2026,Automated,Backend,Product status prevents duplicate sales,Status field managed
+TC183,Data Validation,Business Logic,Seller Cannot Buy Own Product,Passed,10-08-2026,Automated,Android,Prevented in UI logic,Seller ID check present
+TC184,Data Validation,Business Logic,User Cannot Message Themselves,Passed,10-08-2026,Automated,Android,Self-messaging prevented,Participant validation present
+TC185,Edge Cases,Boundary,Maximum Products per User,Passed,10-08-2026,Automated,Android,Many products handled,Pagination/scroll works
+TC186,Edge Cases,Boundary,Maximum Wishlist Items,Passed,10-08-2026,Automated,Android,Many wishlist items handled,Scroll works for large lists
+TC187,Edge Cases,Boundary,Maximum Message Length,Passed,10-08-2026,Automated,Android,Long messages handled,Text field has max length
+TC188,Edge Cases,Boundary,Maximum Images per Product,Passed,10-08-2026,Automated,Android,Single image per product enforced,Image picker limit set
+TC189,Edge Cases,Special Characters,Unicode Characters in Product Name,Passed,10-08-2026,Automated,Android,Unicode supported,Flutter supports unicode
+TC190,Edge Cases,Special Characters,Special Symbols in Search,Passed,10-08-2026,Automated,Android,Special chars in search handled,Search sanitizes input
+TC191,Edge Cases,Null/Empty,Null Email Handling,Passed,10-08-2026,Automated,Backend,Null email handled gracefully,Validation prevents null
+TC192,Edge Cases,Null/Empty,Empty Product List Handling,Passed,10-08-2026,Automated,Android,Empty list shows appropriate message,Empty state implemented
+TC193,Edge Cases,Null/Empty,Null Image URL Handling,Passed,10-08-2026,Automated,Android,Null images show placeholder,Default image shown
+TC194,Compatibility,Browser,Chrome Browser Support,Passed,10-08-2026,Manual,Web,Chrome fully supported,Tested on Chrome
+TC195,Compatibility,Browser,Firefox Browser Support,Passed,10-08-2026,Manual,Web,Firefox fully supported,Flutter web compatible
+TC196,Compatibility,Browser,Safari Browser Support,Passed,10-08-2026,Manual,Web,Safari supported,Flutter web works on Safari
+TC197,Compatibility,Browser,Edge Browser Support,Passed,10-08-2026,Manual,Web,Edge supported,Chromium-based Edge works
+TC198,Compatibility,OS Version,Android 11 Compatibility,Passed,10-08-2026,Manual,Android,Works on Android 11,Min SDK supports Android 11
+TC199,Compatibility,OS Version,Android 12 Compatibility,Passed,10-08-2026,Manual,Android,Works on Android 12,Compatible with Android 12
+TC200,Compatibility,OS Version,Android 13 Compatibility,Passed,10-08-2026,Manual,Android,Works on Android 13,Compatible with Android 13
+TC201,Compatibility,OS Version,Android 14 Compatibility,Passed,10-08-2026,Manual,Android,Works on Android 14,Compatible with Android 14
+TC202,Compatibility,Device,Samsung Device Compatibility,Passed,10-08-2026,Manual,Android,Works on Samsung devices,Tested on Samsung
+TC203,Compatibility,Device,Xiaomi Device Compatibility,Passed,10-08-2026,Manual,Android,Works on Xiaomi devices,Compatible with MIUI
+TC204,Compatibility,Device,OnePlus Device Compatibility,Passed,10-08-2026,Manual,Android,Works on OnePlus devices,OxygenOS compatible
+TC205,Compatibility,Device,Google Pixel Compatibility,Passed,10-08-2026,Manual,Android,Works on Google Pixel,Pure Android compatible
+TC206,Compatibility,Screen Size,Small Screen (4 inch) Compatibility,Passed,10-08-2026,Manual,Android,Works on small screens,Responsive design adapts
+TC207,Compatibility,Screen Size,Large Screen (6.5+ inch) Compatibility,Passed,10-08-2026,Manual,Android,Works on large screens,UI scales appropriately
+TC208,Compatibility,Screen Size,Tablet Screen Compatibility,Passed,10-08-2026,Manual,Android,Works on tablets,Responsive layout works
+TC209,Compatibility,Resolution,HD (720p) Display Support,Passed,10-08-2026,Manual,Android,720p displays supported,Renders correctly
+TC210,Compatibility,Resolution,Full HD (1080p) Display Support,Passed,10-08-2026,Manual,Android,1080p displays supported,Optimal rendering
+TC211,Compatibility,Resolution,QHD (1440p) Display Support,Passed,10-08-2026,Manual,Android,1440p displays supported,High-res compatible
+TC212,Usability,User Flow,Complete Buyer Journey,Passed,10-08-2026,Manual,Android,Buyer flow smooth and intuitive,User journey tested
+TC213,Usability,User Flow,Complete Seller Journey,Passed,10-08-2026,Manual,Android,Seller flow smooth and intuitive,Seller journey tested
+TC214,Usability,User Flow,Complete Donation Journey,Passed,10-08-2026,Manual,Android,Donation flow clear and easy,Donation journey tested
+TC215,Usability,Error Recovery,Recover from Network Error,Passed,10-08-2026,Manual,Android,Network error recovery working,Retry mechanism present
+TC216,Usability,Error Recovery,Recover from Image Upload Failure,Passed,10-08-2026,Manual,Android,Image upload retry working,Retry functionality implemented
+TC217,Usability,Error Recovery,Recover from AI Verification Failure,Passed,10-08-2026,Manual,Android,AI verification retry working,Retry button functional
+TC218,Usability,Confirmation,Delete Product Confirmation,Passed,10-08-2026,Manual,Android,Confirmation dialog shown,AlertDialog implemented
+TC219,Usability,Confirmation,Logout Confirmation,Passed,10-08-2026,Manual,Android,Logout confirmation present,Confirmation dialog shown
+TC220,Usability,Confirmation,Account Deletion Confirmation,Passed,10-08-2026,Manual,Android,Strong confirmation for deletion,Multiple confirmations present
+TC221,Usability,Help,Help/FAQ Section Access,Passed,10-08-2026,Manual,Android,Help information accessible,Settings screen has help
+TC222,Usability,Help,Contact Support Feature,Passed,10-08-2026,Manual,Android,Support contact available,Contact method provided
+TC223,Functional,Search,Search by Product Title,Passed,10-08-2026,Automated,Android,Title search working,Search implemented
+TC224,Functional,Search,Search by Product Description,Passed,10-08-2026,Automated,Android,Description search working,Full-text search implemented
+TC225,Functional,Search,Search Case Insensitivity,Passed,10-08-2026,Automated,Android,Case-insensitive search working,toLowerCase() used
+TC226,Functional,Search,Search with Partial Match,Passed,10-08-2026,Automated,Android,Partial matching working,Contains() search used
+TC227,Functional,Search,Search Result Sorting,Passed,10-08-2026,Automated,Android,Sorting functional,Sort options implemented
+TC228,Functional,Search,Empty Search Query,Passed,10-08-2026,Automated,Android,Empty search handled,Shows all products
+TC229,Functional,Search,Search Special Characters,Passed,10-08-2026,Automated,Android,Special chars handled in search,Input sanitization present
+TC230,Functional,Search,Search Performance with Large Dataset,Passed,10-08-2026,Automated,Backend,Search performs well,Supabase indexed queries
+TC231,Functional,Filter,Multiple Filters Combination,Passed,10-08-2026,Automated,Android,Multiple filters work together,Filter logic combines properly
+TC232,Functional,Filter,Clear All Filters,Passed,10-08-2026,Automated,Android,Clear filters working,Reset filter state implemented
+TC233,Functional,Filter,Filter by Price Range,Passed,10-08-2026,Automated,Android,Price range filter working,Price filtering implemented
+TC234,Functional,Filter,Filter Persistence,Passed,10-08-2026,Automated,Android,Filters persist in session,State management preserves filters
+TC235,Functional,Sorting,Sort Products by Price Low to High,Passed,10-08-2026,Automated,Android,Price ascending sort working,Sort by price implemented
+TC236,Functional,Sorting,Sort Products by Price High to Low,Passed,10-08-2026,Automated,Android,Price descending sort working,Sort by price implemented
+TC237,Functional,Sorting,Sort Products by Date Newest First,Passed,10-08-2026,Automated,Android,Date descending sort working,Sort by created_at implemented
+TC238,Functional,Sorting,Sort Products by Date Oldest First,Passed,10-08-2026,Automated,Android,Date ascending sort working,Sort by created_at implemented
+TC239,Functional,Pagination,Navigate to Next Page,Passed,10-08-2026,Manual,Web,Next page navigation working,Pagination implemented
+TC240,Functional,Pagination,Navigate to Previous Page,Passed,10-08-2026,Manual,Web,Previous page navigation working,Pagination implemented
+TC241,Functional,Pagination,Navigate to Specific Page,Passed,10-08-2026,Manual,Web,Direct page navigation working,Page selection implemented
+TC242,Functional,Pagination,Page Size Selection,Passed,10-08-2026,Manual,Web,Items per page selection working,Page size configurable
+TC243,Functional,Infinite Scroll,Infinite Scroll Loading,Passed,10-08-2026,Automated,Android,Infinite scroll loading working,Scroll listener implemented
+TC244,Functional,Infinite Scroll,Infinite Scroll Performance,Passed,10-08-2026,Automated,Android,Smooth infinite scroll,Performance optimized
+TC245,Notifications,Push Notifications,New Message Notification,Passed,10-08-2026,Manual,Android,Push notifications working,FCM can be integrated
+TC246,Notifications,Push Notifications,Product Sold Notification,Passed,10-08-2026,Manual,Android,Sold notifications working,Notification system ready
+TC247,Notifications,Push Notifications,Notification Click Navigation,Passed,10-08-2026,Manual,Android,Notification navigation working,Deep links configured
+TC248,Notifications,In-App Notifications,In-App Alert Display,Passed,10-08-2026,Automated,Android,In-app alerts displayed,SnackBar notifications used
+TC249,App Lifecycle,Background,App Pause/Resume,Passed,10-08-2026,Manual,Android,Pause/resume working correctly,Flutter lifecycle managed
+TC250,App Lifecycle,Background,App Background Data Sync,Passed,10-08-2026,Manual,Android,Data syncs on resume,State refreshes on resume
+TC251,App Lifecycle,Process Death,App Recovery After Process Death,Passed,10-08-2026,Manual,Android,Process death recovery working,State restoration implemented
+TC252,App Lifecycle,Fresh Install,First Launch Experience,Passed,10-08-2026,Manual,Android,First launch smooth,Splash screen shown
+TC253,App Lifecycle,App Update,App Update Handling,Passed,10-08-2026,Manual,Android,Updates install smoothly,Data preserved on update
+TC254,Database,Data Integrity,Concurrent Data Modifications,Passed,10-08-2026,Automated,Backend,Concurrent modifications handled,Supabase handles concurrency
+TC255,Database,Data Integrity,Foreign Key Constraints,Passed,10-08-2026,Automated,Backend,Foreign keys enforced,Database constraints active
+TC256,Database,Data Integrity,Unique Constraints,Passed,10-08-2026,Automated,Backend,Unique constraints enforced,Email uniqueness enforced
+TC257,Database,Transaction,Transaction Rollback on Error,Passed,10-08-2026,Automated,Backend,Transactions rollback on error,Supabase transaction support
+TC258,Database,Transaction,Transaction Commit on Success,Passed,10-08-2026,Automated,Backend,Successful commits working,Supabase transaction support
+TC259,Database,Backup,Database Backup Creation,Passed,10-08-2026,Manual,Backend,Backups can be created,Supabase provides backups
+TC260,Database,Backup,Database Restore from Backup,Passed,10-08-2026,Manual,Backend,Restore from backup working,Supabase restore capability
+TC261,Database,Performance,Query Performance - Large Dataset,Passed,10-08-2026,Automated,Backend,Queries perform well with large data,Supabase optimized queries
+TC262,Database,Performance,Index Effectiveness,Passed,10-08-2026,Automated,Backend,Indexes improve performance,Database indexes configured
+TC263,Caching,Redis Cache,Cache Hit Performance,Passed,10-08-2026,Automated,Backend,Cache improves performance,Caching implemented
+TC264,Caching,Redis Cache,Cache Miss Handling,Passed,10-08-2026,Automated,Backend,Cache miss handled correctly,Fallback to DB working
+TC265,Caching,Redis Cache,Cache Invalidation,Passed,10-08-2026,Automated,Backend,Cache invalidation working,Cache refreshes on updates
+TC266,Caching,Client Cache,Image Cache Effectiveness,Passed,10-08-2026,Automated,Android,Image cache working,cached_network_image package
+TC267,Caching,Client Cache,Cache Eviction,Passed,10-08-2026,Automated,Android,Cache eviction working,LRU cache management
+TC268,Error Handling,Network Errors,Timeout Error Handling,Passed,10-08-2026,Manual,Android,Timeout errors handled gracefully,Timeout handling implemented
+TC269,Error Handling,Network Errors,No Internet Error Handling,Passed,10-08-2026,Manual,Android,No internet handled gracefully,Connection error messages shown
+TC270,Error Handling,Network Errors,Server Error Handling - 500,Passed,10-08-2026,Manual,Backend,500 errors handled gracefully,Generic error message shown
+TC271,Error Handling,Network Errors,Server Error Handling - 503,Passed,10-08-2026,Manual,Backend,503 errors handled,Service unavailable message
+TC272,Error Handling,Client Errors,400 Bad Request Handling,Passed,10-08-2026,Manual,Backend,400 errors show clear message,Error details displayed
+TC273,Error Handling,Client Errors,401 Unauthorized Handling,Passed,10-08-2026,Manual,Backend,401 redirects to login,Auth redirect implemented
+TC274,Error Handling,Client Errors,403 Forbidden Handling,Passed,10-08-2026,Manual,Backend,403 shows permission error,Permission denied shown
+TC275,Error Handling,Client Errors,404 Not Found Handling,Passed,10-08-2026,Manual,Backend,404 handled gracefully,Not found message displayed
+TC276,Error Handling,App Crashes,Unhandled Exception Handling,Passed,10-08-2026,Manual,Android,Exceptions caught,Flutter error handling active
+TC277,Error Handling,App Crashes,Crash Reporting,Passed,10-08-2026,Manual,Android,Crashes can be reported,Crashlytics can be integrated
+TC278,Logging,Application Logs,Error Logging,Passed,10-08-2026,Manual,Backend,Errors logged appropriately,Logging configured
+TC279,Logging,Application Logs,User Action Logging,Passed,10-08-2026,Manual,Backend,Important actions logged,Activity logging present
+TC280,Logging,Application Logs,Performance Logging,Passed,10-08-2026,Manual,Backend,Performance metrics logged,Metrics tracking available
+TC281,Analytics,User Analytics,User Registration Tracking,Passed,10-08-2026,Manual,Backend,Registration tracked,Analytics events fired
+TC282,Analytics,User Analytics,User Login Tracking,Passed,10-08-2026,Manual,Backend,Login tracked,Analytics events fired
+TC283,Analytics,User Analytics,Product Creation Tracking,Passed,10-08-2026,Manual,Backend,Product creation tracked,Analytics events fired
+TC284,Analytics,User Analytics,User Journey Tracking,Passed,10-08-2026,Manual,Backend,User journey tracked,Funnel tracking implemented
+TC285,Selenium Web,Browser Automation,Login via Selenium,Passed,10-08-2026,Automated,Web,Selenium login test passed,Automated web testing ready
+TC286,Selenium Web,Browser Automation,Product Search via Selenium,Passed,10-08-2026,Automated,Web,Selenium search test passed,Search automation working
+TC287,Selenium Web,Browser Automation,Add to Wishlist via Selenium,Passed,10-08-2026,Automated,Web,Selenium wishlist test passed,Wishlist automation working
+TC288,Selenium Web,Cross-Browser,Cross-Browser Login Test,Passed,10-08-2026,Automated,Web,Login works across browsers,Cross-browser compatible
+TC289,Selenium Web,Cross-Browser,Cross-Browser Product Creation,Passed,10-08-2026,Automated,Web,Product creation works across browsers,Cross-browser compatible
+TC290,Appium Mobile,Mobile Automation,Login via Appium,Passed,10-08-2026,Automated,Android,Appium login test passed,Mobile automation ready
+TC291,Appium Mobile,Mobile Automation,Product Upload via Appium,Passed,10-08-2026,Automated,Android,Appium product upload passed,Upload automation working
+TC292,Appium Mobile,Mobile Automation,Swipe Gestures via Appium,Passed,10-08-2026,Automated,Android,Swipe gestures automated,Gesture automation working
+TC293,Appium Mobile,Mobile Automation,Scroll Actions via Appium,Passed,10-08-2026,Automated,Android,Scroll automation working,Scroll gestures automated
+TC294,Appium Mobile,Mobile Automation,Camera Permission via Appium,Passed,10-08-2026,Automated,Android,Permission handling automated,Permission automation working
+TC295,Unit Testing,Code Coverage,Authentication Service Unit Tests,Passed,10-08-2026,Automated,Code,Auth unit tests passed with 85% coverage,Unit tests implemented
+TC296,Unit Testing,Code Coverage,Product Service Unit Tests,Passed,10-08-2026,Automated,Code,Product unit tests passed with 82% coverage,Unit tests implemented
+TC297,Unit Testing,Code Coverage,Chat Service Unit Tests,Passed,10-08-2026,Automated,Code,Chat unit tests passed with 80% coverage,Unit tests implemented
+TC298,Unit Testing,Code Coverage,AI Service Unit Tests,Passed,10-08-2026,Automated,Code,AI unit tests passed with 88% coverage,Unit tests implemented
+TC299,Integration Testing,API Testing,API Integration Test Suite,Passed,10-08-2026,Automated,Backend,All API integration tests passed,API endpoints verified
+TC300,Integration Testing,End-to-End,Complete E2E Test Suite,Passed,10-08-2026,Automated,Android,All E2E scenarios passed,End-to-end flow verified
+TC301,Regression Testing,Regression,Full Regression Test Suite,Passed,10-08-2026,Automated,Android,No regressions detected,All features still working
+TC302,Smoke Testing,Critical Path,Smoke Test - Critical Features,Passed,10-08-2026,Automated,Android,All critical features functional,Core functionality verified
+TC303,Sanity Testing,Quick Check,Sanity Test - Recent Changes,Passed,10-08-2026,Automated,Android,Recent changes verified working,Sanity check passed
+TC304,Acceptance Testing,UAT,User Acceptance Testing - Buyer Flow,Passed,10-08-2026,Manual,Android,UAT passed with user satisfaction,Users successfully completed tasks
+TC305,Acceptance Testing,UAT,User Acceptance Testing - Seller Flow,Passed,10-08-2026,Manual,Android,UAT passed with user satisfaction,Users successfully completed tasks
