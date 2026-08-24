@@ -19,29 +19,27 @@ class EnhancedProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(16),
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 10,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
           children: [
-            // Product Image with Wishlist Button
+            // Product Image Section
             Stack(
               children: [
-                // Product Image
+                // Main Image
                 ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                   child: AspectRatio(
@@ -50,62 +48,102 @@ class EnhancedProductCard extends StatelessWidget {
                         ? CachedNetworkImage(
                             imageUrl: product.imageUrls.first,
                             fit: BoxFit.cover,
+                            width: double.infinity,
                             placeholder: (context, url) => Container(
                               color: AppColors.primaryLight.withValues(alpha: 0.1),
-                              child: const Center(
-                                child: CircularProgressIndicator(strokeWidth: 2),
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: AppColors.primary,
+                                ),
                               ),
                             ),
                             errorWidget: (context, url, error) => Container(
                               color: AppColors.primaryLight.withValues(alpha: 0.1),
-                              child: Icon(Icons.image_outlined, size: 50, color: AppColors.primaryLight),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.image_outlined,
+                                    size: 48,
+                                    color: AppColors.primaryLight,
+                                  ),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'No image',
+                                    style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey[600],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           )
                         : Container(
                             color: AppColors.primaryLight.withValues(alpha: 0.1),
-                            child: Icon(Icons.image_outlined, size: 50, color: AppColors.primaryLight),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.shopping_bag_outlined,
+                                  size: 48,
+                                  color: AppColors.primaryLight,
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  'No image',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey[600],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                   ),
                 ),
 
-                // Category Badge - Top Left
-                Positioned(
-                  top: 8,
-                  left: 8,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(8),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.2),
-                          blurRadius: 4,
+                // Wishlist Button - Top Right
+                if (showWishlist && onWishlistToggle != null)
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: GestureDetector(
+                      onTap: onWishlistToggle,
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.15),
+                              blurRadius: 8,
+                              offset: const Offset(0, 2),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                    child: Text(
-                      product.categoryLabel,
-                      style: const TextStyle(
-                        fontSize: 9,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        child: Icon(
+                          product.isWishlisted ? Icons.favorite : Icons.favorite_border,
+                          color: product.isWishlisted ? Colors.red : Colors.grey[700],
+                          size: 20,
+                        ),
                       ),
                     ),
                   ),
-                ),
 
-                // Status Badge
+                // Status Badge - Top Left (Only if sold/reserved)
                 if (product.status != ProductStatus.available)
                   Positioned(
-                    top: 8,
-                    right: showWishlist ? 48 : 8,
+                    top: 10,
+                    left: 10,
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       decoration: BoxDecoration(
                         color: product.status == ProductStatus.sold
-                            ? AppColors.error
-                            : AppColors.warning,
+                            ? Colors.red.shade600
+                            : Colors.orange.shade600,
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
@@ -118,32 +156,9 @@ class EnhancedProductCard extends StatelessWidget {
                         product.statusLabel.toUpperCase(),
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 9,
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                // Wishlist Button
-                if (showWishlist && onWishlistToggle != null)
-                  Positioned(
-                    top: 8,
-                    right: 8,
-                    child: Material(
-                      color: Colors.white,
-                      shape: const CircleBorder(),
-                      elevation: 4,
-                      child: InkWell(
-                        onTap: onWishlistToggle,
-                        customBorder: const CircleBorder(),
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
-                          child: Icon(
-                            product.isWishlisted ? Icons.favorite : Icons.favorite_border,
-                            color: product.isWishlisted ? AppColors.error : Colors.grey[600],
-                            size: 18,
-                          ),
+                          letterSpacing: 0.5,
                         ),
                       ),
                     ),
@@ -151,72 +166,101 @@ class EnhancedProductCard extends StatelessWidget {
               ],
             ),
 
-            // Product Details
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Product Title
-                  Text(
-                    product.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.textPrimary,
-                      height: 1.3,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-
-                  // Rating Section
-                  _buildRatingSection(),
-                  const SizedBox(height: 10),
-
-                  // Price and View Button
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      // Price
-                      Text(
-                        '₹${product.price.toStringAsFixed(0)}',
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w900,
-                          color: AppColors.primary,
+            // Product Info Section
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Category Badge
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary.withValues(alpha: 0.1),
+                        borderRadius: BorderRadius.circular(6),
+                        border: Border.all(
+                          color: AppColors.primary.withValues(alpha: 0.3),
+                          width: 1,
                         ),
                       ),
-
-                      // View Button
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
-                        decoration: BoxDecoration(
-                          gradient: AppColors.primaryGradient,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.primary.withValues(alpha: 0.3),
-                              blurRadius: 8,
-                              offset: const Offset(0, 2),
-                            ),
-                          ],
+                      child: Text(
+                        product.categoryLabel,
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.3,
                         ),
-                        child: const Text(
-                          'View',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+
+                    // Product Title
+                    Text(
+                      product.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.textPrimary,
+                        height: 1.3,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+
+                    // Rating Section
+                    if (product.totalReviews > 0)
+                      _buildRatingSection()
+                    else
+                      _buildNoReviewsSection(),
+
+                    const Spacer(),
+
+                    // Price and View Button
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Price
+                        Text(
+                          '₹${product.price.toStringAsFixed(0)}',
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w900,
+                            color: AppColors.primary,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+
+                        // View Button
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          decoration: BoxDecoration(
+                            gradient: AppColors.primaryGradient,
+                            borderRadius: BorderRadius.circular(20),
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.primary.withValues(alpha: 0.3),
+                                blurRadius: 6,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: const Text(
+                            'View',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -225,39 +269,48 @@ class EnhancedProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildRatingSection() {
-    if (product.totalReviews == 0) {
-      return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-        decoration: BoxDecoration(
-          color: Colors.grey[100],
-          borderRadius: BorderRadius.circular(6),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.star_border_rounded, size: 14, color: Colors.grey[400]),
-            const SizedBox(width: 4),
-            Text(
-              'No reviews',
-              style: TextStyle(
-                fontSize: 10,
-                color: Colors.grey[600],
-                fontWeight: FontWeight.w500,
-              ),
+  Widget _buildNoReviewsSection() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(6),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.star_outline, size: 14, color: Colors.grey[400]),
+          const SizedBox(width: 4),
+          Text(
+            'No reviews',
+            style: TextStyle(
+              fontSize: 11,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
             ),
-          ],
-        ),
-      );
-    }
+          ),
+        ],
+      ),
+    );
+  }
 
+  Widget _buildRatingSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
       children: [
         // Stars and Rating
         Row(
           children: [
-            _buildStars(product.averageRating),
+            ...List.generate(5, (index) {
+              if (index < product.averageRating.floor()) {
+                return const Icon(Icons.star, size: 14, color: Colors.amber);
+              } else if (index < product.averageRating) {
+                return const Icon(Icons.star_half, size: 14, color: Colors.amber);
+              } else {
+                return Icon(Icons.star_border, size: 14, color: Colors.grey[300]);
+              }
+            }),
             const SizedBox(width: 6),
             Text(
               product.averageRating.toStringAsFixed(1),
@@ -267,7 +320,7 @@ class EnhancedProductCard extends StatelessWidget {
                 color: AppColors.textPrimary,
               ),
             ),
-            const SizedBox(width: 4),
+            const SizedBox(width: 3),
             Text(
               '(${product.totalReviews})',
               style: TextStyle(
@@ -285,29 +338,18 @@ class EnhancedProductCard extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                height: 8,
+                height: 6,
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(3),
                 ),
                 child: FractionallySizedBox(
                   alignment: Alignment.centerLeft,
                   widthFactor: product.ratingPercentage,
                   child: Container(
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          _getRatingColor(product.averageRating),
-                          _getRatingColor(product.averageRating).withValues(alpha: 0.8),
-                        ],
-                      ),
-                      borderRadius: BorderRadius.circular(4),
-                      boxShadow: [
-                        BoxShadow(
-                          color: _getRatingColor(product.averageRating).withValues(alpha: 0.3),
-                          blurRadius: 4,
-                        ),
-                      ],
+                      color: _getRatingColor(product.averageRating),
+                      borderRadius: BorderRadius.circular(3),
                     ),
                   ),
                 ),
@@ -335,26 +377,11 @@ class EnhancedProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildStars(double rating) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: List.generate(5, (index) {
-        if (index < rating.floor()) {
-          return const Icon(Icons.star, size: 14, color: Colors.amber);
-        } else if (index < rating) {
-          return const Icon(Icons.star_half, size: 14, color: Colors.amber);
-        } else {
-          return Icon(Icons.star_border, size: 14, color: Colors.grey[300]);
-        }
-      }),
-    );
-  }
-
   Color _getRatingColor(double rating) {
-    if (rating >= 4.5) return Colors.green;
-    if (rating >= 3.5) return Colors.lightGreen;
-    if (rating >= 2.5) return Colors.orange;
-    if (rating >= 1.5) return Colors.deepOrange;
-    return Colors.red;
+    if (rating >= 4.5) return Colors.green.shade600;
+    if (rating >= 3.5) return Colors.lightGreen.shade600;
+    if (rating >= 2.5) return Colors.orange.shade600;
+    if (rating >= 1.5) return Colors.deepOrange.shade600;
+    return Colors.red.shade600;
   }
 }
