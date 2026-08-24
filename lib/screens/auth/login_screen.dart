@@ -518,15 +518,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ],
                                 ),
                               ),
-                              Image.asset(
-                                'assets/images/shield.png',
-                                width: 60,
-                                height: 60,
-                                errorBuilder: (_, __, ___) => const Icon(
-                                  Icons.verified_user,
-                                  size: 40,
-                                  color: AppColors.success,
-                                ),
+                              const Icon(
+                                Icons.shield_outlined,
+                                size: 50,
+                                color: AppColors.success,
                               ),
                             ],
                           ),
