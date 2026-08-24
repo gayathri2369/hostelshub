@@ -489,6 +489,55 @@ class _MyProductCard extends StatelessWidget {
                   ),
                 ),
 
+                const SizedBox(height: 6),
+
+                // RATING SECTION
+                if (product.totalReviews > 0)
+                  Row(
+                    children: [
+                      ...List.generate(5, (index) {
+                        if (index < product.averageRating.floor()) {
+                          return const Icon(Icons.star, size: 11, color: Colors.amber);
+                        } else if (index < product.averageRating) {
+                          return const Icon(Icons.star_half, size: 11, color: Colors.amber);
+                        } else {
+                          return Icon(Icons.star_border, size: 11, color: Colors.grey[300]);
+                        }
+                      }),
+                      const SizedBox(width: 4),
+                      Text(
+                        product.averageRating.toStringAsFixed(1),
+                        style: const TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
+                      const SizedBox(width: 2),
+                      Text(
+                        '(${product.totalReviews})',
+                        style: TextStyle(
+                          fontSize: 9,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  )
+                else
+                  Row(
+                    children: [
+                      Icon(Icons.star_outline, size: 11, color: Colors.grey[400]),
+                      const SizedBox(width: 4),
+                      Text(
+                        'No reviews',
+                        style: TextStyle(
+                          fontSize: 9,
+                          color: Colors.grey[600],
+                        ),
+                      ),
+                    ],
+                  ),
+
                 const SizedBox(height: 8),
 
                 // PRICE + VIEW
@@ -519,7 +568,11 @@ class _MyProductCard extends StatelessWidget {
                       height: 30,
                       child: ElevatedButton(
                         onPressed: () {
-                          // Add product details navigation here.
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.productDetail,
+                            arguments: product.id,
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primary,
