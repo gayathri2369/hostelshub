@@ -54,27 +54,34 @@ class _DonateScreenState extends State<DonateScreen> {
         imageQuality: 85,
       );
       if (image != null) {
-        // Copy image to permanent app directory
-        final Directory appDir = await getApplicationDocumentsDirectory();
-        final String fileName = '${DateTime.now().millisecondsSinceEpoch}_${path.basename(image.path)}';
-        final String permanentPath = path.join(appDir.path, 'product_images', fileName);
+        String permanentPath;
         
-        // Create directory if it doesn't exist
-        final Directory imageDir = Directory(path.join(appDir.path, 'product_images'));
-        if (!await imageDir.exists()) {
-          await imageDir.create(recursive: true);
+        if (kIsWeb) {
+          // On web, just use the image path directly
+          permanentPath = image.path;
+        } else {
+          // On mobile, copy image to permanent app directory
+          final Directory appDir = await getApplicationDocumentsDirectory();
+          final String fileName = '${DateTime.now().millisecondsSinceEpoch}_${path.basename(image.path)}';
+          permanentPath = path.join(appDir.path, 'product_images', fileName);
+          
+          // Create directory if it doesn't exist
+          final Directory imageDir = Directory(path.join(appDir.path, 'product_images'));
+          if (!await imageDir.exists()) {
+            await imageDir.create(recursive: true);
+          }
+          
+          // Copy the image to permanent location
+          final File sourceFile = File(image.path);
+          await sourceFile.copy(permanentPath);
         }
-        
-        // Copy the image to permanent location
-        final File sourceFile = File(image.path);
-        final File permanentFile = await sourceFile.copy(permanentPath);
         
         // Analyze the image with AI
         if (MistralAIService.isConfigured) {
           setState(() => _isAnalyzing = true);
           
           try {
-            final analysis = await MistralAIService.analyzeProductImage(permanentFile.path);
+            final analysis = await MistralAIService.analyzeProductImage(kIsWeb ? image.path : permanentPath);
             
             if (!mounted) return;
             
@@ -138,7 +145,7 @@ class _DonateScreenState extends State<DonateScreen> {
                       onPressed: () {
                         Navigator.pop(context);
                         // Allow upload despite API failure (with warning)
-                        setState(() => _imagePaths.add(permanentFile.path));
+                        setState(() => _imagePaths.add(permanentPath));
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('⚠️ Uploaded without AI verification - ensure item is in good condition!'),
@@ -270,7 +277,7 @@ class _DonateScreenState extends State<DonateScreen> {
               );
               
               // Delete the rejected image
-              await permanentFile.delete();
+              if (!kIsWeb) { await File(permanentPath).delete(); }
               setState(() => _isAnalyzing = false);
               return;
             }
@@ -392,7 +399,7 @@ class _DonateScreenState extends State<DonateScreen> {
               ),
             );
             
-            setState(() => _imagePaths.add(permanentFile.path));
+            setState(() => _imagePaths.add(permanentPath));
             
             // Auto-fill details if empty
             if (_titleCtrl.text.isEmpty && analysis.productName != 'Unknown Product') {
@@ -506,7 +513,7 @@ class _DonateScreenState extends State<DonateScreen> {
             );
             
             // Delete the image file and optionally retry
-            await permanentFile.delete();
+            if (!kIsWeb) { await File(permanentPath).delete(); }
             
             if (shouldRetry == true && mounted) {
               // Retry by calling _pickImage again
@@ -518,7 +525,7 @@ class _DonateScreenState extends State<DonateScreen> {
           }
         } else {
           // AI not configured, add without analysis
-          setState(() => _imagePaths.add(permanentFile.path));
+          setState(() => _imagePaths.add(permanentPath));
         }
       }
     } catch (e) {
@@ -1867,3 +1874,4 @@ class _DonationExample extends StatelessWidget {
         ),
       );
 }
+
